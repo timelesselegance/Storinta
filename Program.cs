@@ -10,8 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // 1) PostgreSQL DbContext
 var connStr = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine("CONN STR => " + connStr); // Debug log
+
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseNpgsql(connStr));
+
 
 // 2) Identity (ApplicationUser + Roles + Token + UI)
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
