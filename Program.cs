@@ -11,40 +11,34 @@ var builder = WebApplication.CreateBuilder(args);
 var loggerFactory = LoggerFactory.Create(logBuilder => logBuilder.AddConsole()); // Erken loglama için fabrika
 var earlyLogger = loggerFactory.CreateLogger<Program>(); // Erken logger
 
-// --- VERİTABANI BAĞLANTISI GÜNCELLEMESİ BAŞLANGICI ---
+// --- VERİTABANI BAĞLANTISI KODU (DEĞİŞMEDİ) ---
+// ... (önceki doğru çalışan bağlantı kodu burada) ...
+string? connectionString = null;
+string? determinedHost = null;
+int determinedPort = 5432;
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-// 1) PostgreSQL DbContext - Ortam Değişkeni veya appsettings.json'dan Bağlantı Dizesi Al
-string? connectionString = null; // Değişkeni nullable (string?) olarak tanımla ve başlangıçta null ata
-string? determinedHost = null; // Hangi hostun kullanıldığını loglamak için
-int determinedPort = 5432; // Varsayılan port
-var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL"); // Render tarafından sağlanan değişkeni oku
-
-earlyLogger.LogInformation("Okunan DATABASE_URL: {DatabaseUrl}", databaseUrl ?? "BULUNAMADI"); // Okunan URL'yi logla
+earlyLogger.LogInformation("Okunan DATABASE_URL: {DatabaseUrl}", databaseUrl ?? "BULUNAMADI");
 
 if (!string.IsNullOrEmpty(databaseUrl))
 {
     earlyLogger.LogInformation("DATABASE_URL ortam değişkeni bulundu, ayrıştırma deneniyor.");
-    try // URI ayrıştırma hata verebilir, try-catch içine alalım
+    try
     {
         var uri = new Uri(databaseUrl);
         var userInfo = uri.UserInfo.Split(':');
 
-        if (userInfo.Length == 2) // Kullanıcı adı ve şifre var mı kontrol et
+        if (userInfo.Length == 2)
         {
-            determinedHost = uri.Host; // Kullanılacak host'u belirle
-
-            // *** PORT DÜZELTMESİ BAŞLANGICI ***
-            // Eğer URL'de port belirtilmemişse uri.Port -1 döner, bu durumda varsayılan 5432'yi kullan.
+            determinedHost = uri.Host;
             determinedPort = uri.Port > 0 ? uri.Port : 5432;
-            // *** PORT DÜZELTMESİ SONU ***
-
             connectionString = $"Host={determinedHost};" +
-                               $"Port={determinedPort};" + // Düzeltilmiş portu kullan
+                               $"Port={determinedPort};" +
                                $"Database={uri.LocalPath.TrimStart('/')};" +
                                $"Username={userInfo[0]};" +
                                $"Password={userInfo[1]};" +
-                               "SSL Mode=Require;" + // Render genellikle SSL gerektirir
-                               "Trust Server Certificate=true;"; // Basitlik için sunucu sertifikasına güven
+                               "SSL Mode=Require;" +
+                               "Trust Server Certificate=true;";
             earlyLogger.LogInformation("DATABASE_URL başarıyla ayrıştırıldı. Host: {Host}, Port: {Port}", determinedHost, determinedPort);
         }
         else
@@ -57,31 +51,25 @@ if (!string.IsNullOrEmpty(databaseUrl))
         earlyLogger.LogError(ex, "HATA: DATABASE_URL ayrıştırılırken istisna oluştu.");
     }
 }
-else
-{
-    earlyLogger.LogWarning("DATABASE_URL ortam değişkeni bulunamadı.");
-}
 
-// Eğer DATABASE_URL işlenemedi veya yoksa, appsettings.json'a bak
 if (string.IsNullOrEmpty(connectionString))
 {
     earlyLogger.LogWarning("DATABASE_URL kullanılamadı veya yok, appsettings.json'daki DefaultConnection deneniyor.");
-    connectionString = builder.Configuration.GetConnectionString("DefaultConnection"); // Burası null dönebilir
+    connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
     if (!string.IsNullOrEmpty(connectionString))
     {
         try
         {
-            // appsettings'den host ve port'u ayrıştırıp loglayalım
             var csBuilder = new NpgsqlConnectionStringBuilder(connectionString);
             determinedHost = csBuilder.Host;
-            determinedPort = csBuilder.Port; // appsettings'deki portu al
+            determinedPort = csBuilder.Port;
             earlyLogger.LogInformation("appsettings.json'dan DefaultConnection okundu. Host: {Host}, Port: {Port}", determinedHost, determinedPort);
         }
         catch (Exception ex)
         {
              earlyLogger.LogError(ex, "HATA: appsettings.json'daki DefaultConnection ayrıştırılırken istisna oluştu.");
-             connectionString = null; // Hatalıysa kullanma
+             connectionString = null;
         }
     }
     else
@@ -90,7 +78,6 @@ if (string.IsNullOrEmpty(connectionString))
     }
 }
 
-// Son kontrol: Bağlantı dizesi hala boş mu?
 if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(determinedHost))
 {
     var errorMessage = "Kritik Hata: Geçerli bir veritabanı bağlantı dizesi veya host adı oluşturulamadı. Uygulama başlatılamıyor.";
@@ -99,22 +86,18 @@ if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(determinedHos
 }
 
 earlyLogger.LogInformation("DbContext için kullanılacak Host: {DeterminedHost}", determinedHost);
-earlyLogger.LogInformation("DbContext için kullanılacak Port: {DeterminedPort}", determinedPort); // Portu da logla
+earlyLogger.LogInformation("DbContext için kullanılacak Port: {DeterminedPort}", determinedPort);
 earlyLogger.LogInformation("DbContext için kullanılacak Bağlantı Dizesi (Şifre Gizli): {ConnectionString}",
     string.Join(";", connectionString.Split(';').Where(part => !part.TrimStart().StartsWith("Password", StringComparison.OrdinalIgnoreCase))));
 
 
-// DbContext'i yapılandırılmış bağlantı dizesiyle ekle
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString)); // connectionString artık null olamaz
+    options.UseNpgsql(connectionString));
 
-// --- VERİTABANI BAĞLANTISI GÜNCELLEMESİ SONU ---
+// --- VERİTABANI BAĞLANTISI KODU SONU ---
 
 
-// --- GERİ KALAN KOD (Identity, MVC, CORS, Seed, Middleware, Routes, Run) ÖNCEKİ GİBİ DEVAM EDİYOR ---
-// ... (önceki kod bloğundaki gibi) ...
-
-// Örnek: Identity ekleme
+// --- Identity, MVC, CORS (DEĞİŞMEDİ) ---
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     {
         options.SignIn.RequireConfirmedAccount = false;
@@ -123,11 +106,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 
-// Örnek: MVC ekleme
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-// Örnek: CORS ekleme
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -142,14 +123,40 @@ builder.Services.AddCors(options =>
 var app = builder.Build(); // Uygulamayı oluştur
 
 
-// Seed işlemi (ILogger kullanacak şekilde güncellenmişti)
+// *** OTOMATİK MIGRATION UYGULAMA BAŞLANGICI ***
+// ÖNEMLİ UYARI: Production ortamında otomatik migration riskli olabilir.
+// Başarısız olursa veya uzun sürerse uygulama başlamayabilir.
+// Daha güvenli yöntemler için (SQL script oluşturma gibi) EF Core dokümantasyonuna bakın.
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var logger = services.GetRequiredService<ILogger<Program>>(); // Doğru logger'ı al
+    var logger = services.GetRequiredService<ILogger<Program>>();
     try
     {
-        logger.LogInformation("Seed işlemi başlıyor..."); // Başlangıç logu
+        logger.LogInformation("Bekleyen veritabanı migration'ları uygulanıyor...");
+        var dbContext = services.GetRequiredService<ApplicationDbContext>();
+        // Bekleyen tüm migration'ları uygula
+        dbContext.Database.Migrate();
+        logger.LogInformation("Veritabanı migration'ları başarıyla uygulandı veya güncel.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogCritical(ex, "Veritabanı migration'ları uygulanırken kritik bir hata oluştu.");
+        // Hata durumunda uygulamanın başlamasını engellemek isteyebilirsiniz.
+        // throw;
+    }
+}
+// *** OTOMATİK MIGRATION UYGULAMA SONU ***
+
+
+// Seed işlemi (DEĞİŞMEDİ)
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    try
+    {
+        logger.LogInformation("Seed işlemi başlıyor...");
         var roleMgr = services.GetRequiredService<RoleManager<IdentityRole>>();
         var userMgr = services.GetRequiredService<UserManager<ApplicationUser>>();
 
@@ -158,10 +165,10 @@ using (var scope = app.Services.CreateScope())
         foreach (var roleName in roles)
         {
             logger.LogDebug("'{RoleName}' rolü kontrol ediliyor...", roleName);
-            if (!await roleMgr.RoleExistsAsync(roleName)) // await kullan
+            if (!await roleMgr.RoleExistsAsync(roleName))
             {
                 logger.LogInformation("'{RoleName}' rolü mevcut değil, oluşturuluyor...", roleName);
-                var roleResult = await roleMgr.CreateAsync(new IdentityRole(roleName)); // await kullan
+                var roleResult = await roleMgr.CreateAsync(new IdentityRole(roleName));
                 if (roleResult.Succeeded)
                 {
                     logger.LogInformation("'{RoleName}' rolü başarıyla oluşturuldu.", roleName);
@@ -177,9 +184,9 @@ using (var scope = app.Services.CreateScope())
         }
 
         const string adminEmail = "denizvurgun58@gmail.com";
-        var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD") ?? "hyOhu>64;*35"; // Önce ortam değişkenine bak
+        var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD") ?? "hyOhu>64;*35";
         logger.LogDebug("Admin kullanıcısı '{AdminEmail}' kontrol ediliyor...", adminEmail);
-        var adminUser = await userMgr.FindByEmailAsync(adminEmail); // await kullan
+        var adminUser = await userMgr.FindByEmailAsync(adminEmail);
 
         if (adminUser == null)
         {
@@ -192,13 +199,12 @@ using (var scope = app.Services.CreateScope())
                 FullName = "Site Admin"
             };
 
-            var createUserResult = await userMgr.CreateAsync(adminUser, adminPassword); // await kullan
+            var createUserResult = await userMgr.CreateAsync(adminUser, adminPassword);
             if (createUserResult.Succeeded)
             {
                 logger.LogInformation("Admin kullanıcısı '{AdminEmail}' başarıyla oluşturuldu.", adminEmail);
-                // Admin rolüne ekleme
                  logger.LogDebug("Admin kullanıcısı '{AdminEmail}' 'Admin' rolüne ekleniyor...", adminEmail);
-                var addToRoleResult = await userMgr.AddToRoleAsync(adminUser, "Admin"); // await kullan
+                var addToRoleResult = await userMgr.AddToRoleAsync(adminUser, "Admin");
                  if (addToRoleResult.Succeeded)
                  {
                      logger.LogInformation("Admin kullanıcısı '{AdminEmail}' 'Admin' rolüne başarıyla eklendi.", adminEmail);
@@ -216,12 +222,11 @@ using (var scope = app.Services.CreateScope())
         else
         {
             logger.LogInformation("Admin kullanıcısı '{AdminEmail}' zaten mevcut.", adminEmail);
-             // Mevcut admin kullanıcısının Admin rolünde olup olmadığını kontrol et ve gerekirse ekle
              logger.LogDebug("Mevcut admin kullanıcısı '{AdminEmail}' 'Admin' rolünde mi kontrol ediliyor...", adminEmail);
-            if (!await userMgr.IsInRoleAsync(adminUser, "Admin")) // await kullan
+            if (!await userMgr.IsInRoleAsync(adminUser, "Admin"))
             {
                  logger.LogInformation("Mevcut admin kullanıcısı '{AdminEmail}' 'Admin' rolünde değil, ekleniyor...", adminEmail);
-                var addToRoleResult = await userMgr.AddToRoleAsync(adminUser, "Admin"); // await kullan
+                var addToRoleResult = await userMgr.AddToRoleAsync(adminUser, "Admin");
                 if (addToRoleResult.Succeeded)
                 {
                     logger.LogInformation("Mevcut admin kullanıcısı '{AdminEmail}' 'Admin' rolüne başarıyla eklendi.", adminEmail);
@@ -236,19 +241,17 @@ using (var scope = app.Services.CreateScope())
                  logger.LogInformation("Mevcut admin kullanıcısı '{AdminEmail}' zaten 'Admin' rolünde.", adminEmail);
             }
         }
-         logger.LogInformation("Seed işlemi tamamlandı."); // Bitiş logu
+         logger.LogInformation("Seed işlemi tamamlandı.");
     }
-    catch (Exception ex) // Seed işlemi sırasında oluşan hataları yakala
+    catch (Exception ex)
     {
-        // ÖNEMLİ: ArgumentException (port hatası) burada yakalanacak!
+        // Seed işlemi sırasında oluşan hataları yakala (Artık migration hatası olmamalı)
         logger.LogCritical(ex, "Seed işlemi sırasında kritik bir hata oluştu.");
-        // Uygulamanın başlamasını engellemek için hatayı tekrar fırlatabiliriz
-        // throw;
     }
 }
 
 
-// Middleware pipeline
+// Middleware pipeline (DEĞİŞMEDİ)
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
@@ -256,7 +259,7 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Routes
+// Routes (DEĞİŞMEDİ)
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
