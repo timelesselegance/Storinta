@@ -268,6 +268,7 @@
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/HumanBodyWeb.MvcApplicationPartsAssemblyInfo.cache
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/HumanBodyWeb.RazorAssemblyInfo.cache
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/HumanBodyWeb.RazorAssemblyInfo.cs
+/Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/HumanBodyWeb.sourcelink.json
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/staticwebassets.build.json
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/staticwebassets.development.json
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/staticwebassets/msbuild.HumanBodyWeb.Microsoft.AspNetCore.StaticWebAssets.props

@@ -16,6 +16,7 @@ var earlyLogger = loggerFactory.CreateLogger<Program>(); // Erken logger
 // 1) PostgreSQL DbContext - Ortam Değişkeni veya appsettings.json'dan Bağlantı Dizesi Al
 string? connectionString = null; // Değişkeni nullable (string?) olarak tanımla ve başlangıçta null ata
 string? determinedHost = null; // Hangi hostun kullanıldığını loglamak için
+int determinedPort = 5432; // Varsayılan port
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL"); // Render tarafından sağlanan değişkeni oku
 
 earlyLogger.LogInformation("Okunan DATABASE_URL: {DatabaseUrl}", databaseUrl ?? "BULUNAMADI"); // Okunan URL'yi logla
@@ -31,14 +32,20 @@ if (!string.IsNullOrEmpty(databaseUrl))
         if (userInfo.Length == 2) // Kullanıcı adı ve şifre var mı kontrol et
         {
             determinedHost = uri.Host; // Kullanılacak host'u belirle
+
+            // *** PORT DÜZELTMESİ BAŞLANGICI ***
+            // Eğer URL'de port belirtilmemişse uri.Port -1 döner, bu durumda varsayılan 5432'yi kullan.
+            determinedPort = uri.Port > 0 ? uri.Port : 5432;
+            // *** PORT DÜZELTMESİ SONU ***
+
             connectionString = $"Host={determinedHost};" +
-                               $"Port={uri.Port};" +
+                               $"Port={determinedPort};" + // Düzeltilmiş portu kullan
                                $"Database={uri.LocalPath.TrimStart('/')};" +
                                $"Username={userInfo[0]};" +
                                $"Password={userInfo[1]};" +
                                "SSL Mode=Require;" + // Render genellikle SSL gerektirir
                                "Trust Server Certificate=true;"; // Basitlik için sunucu sertifikasına güven
-            earlyLogger.LogInformation("DATABASE_URL başarıyla ayrıştırıldı. Host: {Host}", determinedHost);
+            earlyLogger.LogInformation("DATABASE_URL başarıyla ayrıştırıldı. Host: {Host}, Port: {Port}", determinedHost, determinedPort);
         }
         else
         {
@@ -65,10 +72,11 @@ if (string.IsNullOrEmpty(connectionString))
     {
         try
         {
-            // appsettings'den host'u ayrıştırıp loglayalım
+            // appsettings'den host ve port'u ayrıştırıp loglayalım
             var csBuilder = new NpgsqlConnectionStringBuilder(connectionString);
             determinedHost = csBuilder.Host;
-            earlyLogger.LogInformation("appsettings.json'dan DefaultConnection okundu. Host: {Host}", determinedHost);
+            determinedPort = csBuilder.Port; // appsettings'deki portu al
+            earlyLogger.LogInformation("appsettings.json'dan DefaultConnection okundu. Host: {Host}, Port: {Port}", determinedHost, determinedPort);
         }
         catch (Exception ex)
         {
@@ -87,11 +95,11 @@ if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(determinedHos
 {
     var errorMessage = "Kritik Hata: Geçerli bir veritabanı bağlantı dizesi veya host adı oluşturulamadı. Uygulama başlatılamıyor.";
     earlyLogger.LogCritical(errorMessage);
-    // Uygulamanın burada durmasını sağlamak için bir istisna fırlatmak daha iyi olabilir.
     throw new InvalidOperationException(errorMessage);
 }
 
 earlyLogger.LogInformation("DbContext için kullanılacak Host: {DeterminedHost}", determinedHost);
+earlyLogger.LogInformation("DbContext için kullanılacak Port: {DeterminedPort}", determinedPort); // Portu da logla
 earlyLogger.LogInformation("DbContext için kullanılacak Bağlantı Dizesi (Şifre Gizli): {ConnectionString}",
     string.Join(";", connectionString.Split(';').Where(part => !part.TrimStart().StartsWith("Password", StringComparison.OrdinalIgnoreCase))));
 
@@ -105,7 +113,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // --- GERİ KALAN KOD (Identity, MVC, CORS, Seed, Middleware, Routes, Run) ÖNCEKİ GİBİ DEVAM EDİYOR ---
 // ... (önceki kod bloğundaki gibi) ...
-// Seed işlemi içindeki loglamalar da ILogger kullanmaya devam edecek.
 
 // Örnek: Identity ekleme
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -233,7 +240,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex) // Seed işlemi sırasında oluşan hataları yakala
     {
-        // ÖNEMLİ: SocketException burada yakalanacak!
+        // ÖNEMLİ: ArgumentException (port hatası) burada yakalanacak!
         logger.LogCritical(ex, "Seed işlemi sırasında kritik bir hata oluştu.");
         // Uygulamanın başlamasını engellemek için hatayı tekrar fırlatabiliriz
         // throw;
