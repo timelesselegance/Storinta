@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --color-background: #FBFBFA;
+  --color-surface: #F7F7F7;
+  --color-mint: #D3F1E1;
+  --color-mint-hover: #BFEAD3;
+  --color-text: #111111;
+  --color-muted: #6c757d;
+  --color-accent: #FFB703; /* updated to match Figma guide */
+  --color-border: #e0e0e0;
+  --radius: 8px;
+  --transition: 0.3s ease;
+}
+
+/* Base Typography & Layout */
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 60px; /* for footer spacing */
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-mint-hover);
+}
+
+/* Headings with Serif Style */
+h1, h2, h3, h4 {
+  font-family: 'DM Serif Display', serif;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+h1 { font-size: 2.75rem; }  /* ~44px */
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+/* Navbar */
+.navbar {
+  background-color: var(--color-surface);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand img {
+  height: 36px;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-accent);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-mint);
+  border: none;
+  color: var(--color-text);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  transition: background-color var(--transition);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-mint-hover);
+  color: var(--color-text);
+}
+
+.btn-outline-primary {
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  background: transparent;
+  border-radius: var(--radius);
+  transition: background-color var(--transition);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-accent);
+  color: #fff;
+}
+
+/* Focus styles */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(37, 140, 251, 0.5);
+  outline: none;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--color-surface);
+  color: var(--color-muted);
+  padding: 1rem 0;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.875rem;
+}
+
+/* Utility classes */
+.bg-light-blue {
+  background-color: #e9f3f8;
+}
+
+.highlight {
+  border: 2px solid #f5e3dc;
+  padding: 0 0.3em;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-family: 'DM Serif Display', serif;
+}
+
+/* Decorative */
+.dot-triangle {
+  width: 10px;
+  height: 10px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+}
+
+/* Glass Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: black;
+  padding: 1.5rem;
+  position: relative;
+  max-width: 240px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.glass-card h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.glass-card p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.glass-card .icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.2rem;
+  opacity: 0.8;
+}

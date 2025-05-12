@@ -1,0 +1,301 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/assets/img/anthropomorphic-robot-outdoors.jpg",
+      "PackagePath": "staticwebassets/assets/img/anthropomorphic-robot-outdoors.jpg"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/assets/img/expressive-senior-woman-posing.jpg",
+      "PackagePath": "staticwebassets/assets/img/expressive-senior-woman-posing.jpg"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/assets/img/logo.png",
+      "PackagePath": "staticwebassets/assets/img/logo.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/assets/img/portrait-young-beautiful-brunette-woman-girl-model-with-nude-makeup-colorful-summer-pink-hipster-clothes-posing-near-wall-looking-happily.jpg",
+      "PackagePath": "staticwebassets/assets/img/portrait-young-beautiful-brunette-woman-girl-model-with-nude-makeup-colorful-summer-pink-hipster-clothes-posing-near-wall-looking-happily.jpg"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/LICENSE",
+      "PackagePath": "staticwebassets/lib/bootstrap"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery/dist/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery/dist/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/lib/jquery/dist/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/57b928b2-614a-48b2-a305-24dabbea169f.png",
+      "PackagePath": "staticwebassets/uploads/57b928b2-614a-48b2-a305-24dabbea169f.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/7195164f-6196-4688-ad24-cc4fcd22a3d5.png",
+      "PackagePath": "staticwebassets/uploads/7195164f-6196-4688-ad24-cc4fcd22a3d5.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/b5cdca59-31e6-4c6d-a13f-2d4c8b0761ea.png",
+      "PackagePath": "staticwebassets/uploads/b5cdca59-31e6-4c6d-a13f-2d4c8b0761ea.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/b9c2f2e7-c6ba-4b81-b68f-2475199ca4fd.png",
+      "PackagePath": "staticwebassets/uploads/b9c2f2e7-c6ba-4b81-b68f-2475199ca4fd.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/featured/22b4ca8f-7eaf-40a4-b7e1-5d0187788b9f.png",
+      "PackagePath": "staticwebassets/uploads/featured/22b4ca8f-7eaf-40a4-b7e1-5d0187788b9f.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/featured/a1c9d55f-af7d-4e84-b8fd-031f07fca486.png",
+      "PackagePath": "staticwebassets/uploads/featured/a1c9d55f-af7d-4e84-b8fd-031f07fca486.png"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.HumanBodyWeb.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.HumanBodyWeb.props",
+      "PackagePath": "build\\HumanBodyWeb.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.HumanBodyWeb.props",
+      "PackagePath": "buildMultiTargeting\\HumanBodyWeb.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.HumanBodyWeb.props",
+      "PackagePath": "buildTransitive\\HumanBodyWeb.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

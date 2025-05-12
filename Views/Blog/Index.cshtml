@@ -1,0 +1,82 @@
+@model HumanBodyWeb.ViewModels.BlogListViewModel
+@using System.Text.RegularExpressions
+@using System.Net
+
+@functions {
+    private static string HtmlToPlain(string html)
+    {
+        if (string.IsNullOrWhiteSpace(html)) return "";
+        var text = Regex.Replace(html, "<.*?>", string.Empty);
+        text = WebUtility.HtmlDecode(text);
+        return Regex.Replace(text, @"\s{2,}", " ").Trim();
+    }
+
+    private static string Excerpt(string html, int words = 25)
+    {
+        var plain = HtmlToPlain(html);
+        var tokens = plain.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        return tokens.Length <= words ? plain : string.Join(' ', tokens.Take(words)) + "…";
+    }
+}
+
+<h1 class="mb-4">Blog</h1>
+
+<form method="get" class="row mb-4">
+    <div class="col-md-4">
+        <input type="text" name="search" value="@Model.SearchQuery" class="form-control"
+            placeholder="Search blog posts..." />
+    </div>
+    <div class="col-md-4">
+        <select name="categoryId" class="form-select" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+            @foreach (var cat in Model.Categories)
+            {
+                <option value="@cat.Id" selected="@(cat.Id == Model.SelectedCategoryId)">
+                    @cat.Name
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+@foreach (var post in Model.Posts)
+{
+    <article class="row mb-4 align-items-center">
+        @if (!string.IsNullOrEmpty(post.FeaturedImageUrl))
+        {
+            <div class="col-auto">
+                <img src="@post.FeaturedImageUrl" alt="Thumb for @post.Title" class="img-thumbnail"
+                    style="width: 120px; height: auto;" />
+            </div>
+        }
+
+        <div class="@(string.IsNullOrEmpty(post.FeaturedImageUrl) ? "col-12" : "col")">
+            <h2 class="mb-1">
+                <a asp-action="Details" asp-route-slug="@post.Slug">@post.Title</a>
+            </h2>
+
+            <p class="mb-1 text-muted">
+                @Excerpt(post.Content, 25)
+            </p>
+
+            <small class="text-muted">
+                @post.PublishedOn?.ToString("dd MMM yyyy") • @post.Category?.Name
+            </small>
+
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="mt-2">
+                    <a asp-action="Edit" asp-route-id="@post.Id" class="btn btn-sm btn-outline-primary me-1">
+                        <i class="bi bi-pencil me-1"></i> Edit
+                    </a>
+                    <form asp-action="Delete" asp-route-id="@post.Id" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </div>
+            }
+        </div>
+    </article>
+}

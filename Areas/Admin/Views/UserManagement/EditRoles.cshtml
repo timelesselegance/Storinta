@@ -1,0 +1,26 @@
+@model HumanBodyWeb.Areas.Admin.Controllers.EditUserRolesViewModel
+@{
+    ViewData["Title"] = "Rolleri Düzenle: " + Model.Email;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-area="Admin" asp-controller="UserManagement" asp-action="EditRoles" method="post">
+    <input type="hidden" asp-for="UserId" />
+
+    @for (int i = 0; i < Model.Roles.Count; i++)
+    {
+        <div class="form-check">
+            <input asp-for="Roles[i].IsSelected" class="form-check-input" />
+            <label asp-for="Roles[i].IsSelected" class="form-check-label">
+                @Model.Roles[i].RoleName
+            </label>
+            <input type="hidden" asp-for="Roles[i].RoleName" />
+        </div>
+    }
+
+    <button type="submit" class="btn btn-success mt-3">Kaydet</button>
+    <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index" class="btn btn-secondary mt-3 ms-2">
+        Vazgeç
+    </a>
+</form>
