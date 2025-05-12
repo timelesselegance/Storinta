@@ -49,14 +49,16 @@ using (var scope = app.Services.CreateScope())
 
     foreach (var roleName in roles)
     {
-        if (!await roleMgr.RoleExistsAsync(roleName))
-            await roleMgr.CreateAsync(new IdentityRole(roleName));
+        if (!roleMgr.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+        {
+            roleMgr.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+        }
     }
 
     const string adminEmail = "denizvurgun58@gmail.com";
     const string adminPassword = "hyOhu>64;*35";
 
-    var adminUser = await userMgr.FindByEmailAsync(adminEmail);
+    var adminUser = userMgr.FindByEmailAsync(adminEmail).GetAwaiter().GetResult();
 
     if (adminUser == null)
     {
@@ -68,7 +70,7 @@ using (var scope = app.Services.CreateScope())
             FullName = "Site Admin"
         };
 
-        var result = await userMgr.CreateAsync(adminUser, adminPassword);
+        var result = userMgr.CreateAsync(adminUser, adminPassword).GetAwaiter().GetResult();
         if (!result.Succeeded)
         {
             throw new Exception("Admin oluşturulamadı: " +
@@ -76,11 +78,12 @@ using (var scope = app.Services.CreateScope())
         }
     }
 
-    if (!await userMgr.IsInRoleAsync(adminUser, "Admin"))
+    if (!userMgr.IsInRoleAsync(adminUser, "Admin").GetAwaiter().GetResult())
     {
-        await userMgr.AddToRoleAsync(adminUser, "Admin");
+        userMgr.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
     }
 }
+
 
 /// if (!app.Environment.IsDevelopment())
 // {
@@ -95,7 +98,6 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ CORS Middleware Ekle
 app.UseCors("AllowAll");
 
 app.UseAuthentication();
