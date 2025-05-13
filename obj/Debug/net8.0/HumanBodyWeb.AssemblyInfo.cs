@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HumanBodyWeb")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63b187b4e348271e5b623e99c4182f820d4e13a1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9cc1c2c93e9985e23613c166a28baf0897b189bb")]
 [assembly: System.Reflection.AssemblyProductAttribute("HumanBodyWeb")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HumanBodyWeb")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

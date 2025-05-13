@@ -18,50 +18,59 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg storinta-main-navbar fixed-top">
-            <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg storinta-main-navbar fixed-top">
+        <div class="container-fluid">
 
-                <a class="navbar-brand storinta-navbar-brand-text" asp-controller="Home" asp-action="Index">
-                    Storinta
-                </a>
+            <a class="navbar-brand storinta-navbar-brand-text" asp-controller="Home" asp-action="Index">
+                Storinta
+            </a>
 
-                <div class="mx-auto">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStorintaContent" aria-controls="navbarStorintaContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarStorintaContent">
+             
+                <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                            <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index" class="nav-link">
+                                User&nbsp;Management
+                            </a>
                         </li>
+                    }
+                    @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+                    {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
+                            <a class="nav-link" asp-controller="Blog" asp-action="Create">Yeni Yazı</a>
                         </li>
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index" class="nav-link">
-                                    User&nbsp;Management
-                                </a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Blog" asp-action="Create">Yeni Yazı</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                    }
+                 
+                </ul>
 
-                <div class="d-flex align-items-center gap-2 login-color">
-                    @await Html.PartialAsync("_LoginPartial")
+               
+                <div class="navbar-nav ms-lg-auto">
+                    <div class="d-lg-flex align-items-center gap-lg-2 login-color mt-3 mt-lg-0">
+                        @await Html.PartialAsync("_LoginPartial")
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div> 
+    </nav>
+</header>
 
     <main role="main" class="pb-3"> @RenderBody()</main>
 
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
-            <small>&copy; 2025 IntraHuman. All rights reserved.</small>
+            <small>&copy; 2025 Storinta. All rights reserved.</small>
         </div>
     </footer>
 
