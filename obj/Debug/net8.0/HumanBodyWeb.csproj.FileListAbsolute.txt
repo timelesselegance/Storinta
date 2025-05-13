@@ -283,3 +283,5 @@
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/HumanBodyWeb.pdb
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/HumanBodyWeb.genruntimeconfig.cache
 /Users/denizkaanvurgun/HumanBodyWeb/obj/Debug/net8.0/ref/HumanBodyWeb.dll
+/Users/denizkaanvurgun/HumanBodyWeb/bin/Debug/net8.0/CloudinaryDotNet.dll
+/Users/denizkaanvurgun/HumanBodyWeb/bin/Debug/net8.0/dotenv.net.dll

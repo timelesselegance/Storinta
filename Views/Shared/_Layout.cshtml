@@ -18,16 +18,13 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm">
+        <nav class="navbar navbar-expand-lg storinta-main-navbar fixed-top">
             <div class="container-fluid">
 
-                <!-- Logo -->
-                <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
-                    <img src="~/assets/img/intrahuman-logo.png" alt="IntraHuman Logo" width="36" height="36"
-                        class="me-2" />
+                <a class="navbar-brand storinta-navbar-brand-text" asp-controller="Home" asp-action="Index">
+                    Storinta
                 </a>
 
-                <!-- Main menu -->
                 <div class="mx-auto">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row gap-3">
                         <li class="nav-item">
@@ -44,7 +41,6 @@
                                 </a>
                             </li>
                         }
-                        @* Editor ve Admin için Yeni Yazı linki *@
                         @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -54,17 +50,14 @@
                     </ul>
                 </div>
 
-                <!-- Login / Logout (via _LoginPartial) -->
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center gap-2 login-color">
                     @await Html.PartialAsync("_LoginPartial")
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="container py-4">
-        @RenderBody()
-    </main>
+    <main role="main" class="pb-3"> @RenderBody()</main>
 
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
@@ -75,6 +68,25 @@
     <!-- Bootstrap scripts -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     @RenderSection("Scripts", required: false)
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.querySelector('.storinta-main-navbar');
+            if (navbar) { // Navbar elementinin var olduğundan emin olalım
+                // Navbar'ın body'e yaptığı padding-top ayarını dinamik yapmak isterseniz:
+                // const navbarHeight = navbar.offsetHeight;
+                // document.body.style.paddingTop = navbarHeight + 'px';
+                // Ancak CSS'te sabit bir padding-top (örn: 70px) vermek genellikle daha stabildir.
+
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 30) { // 30px kaydırıldıktan sonra (bu değeri değiştirebilirsiniz)
+                        navbar.classList.add('navbar-scrolled');
+                    } else {
+                        navbar.classList.remove('navbar-scrolled');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

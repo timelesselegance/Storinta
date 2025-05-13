@@ -1,55 +1,309 @@
 ﻿@{
-    ViewData["Title"] = "Welcome";
+    ViewData["Title"] = "Storinta - Hikayeler, Basitçe Anlatılır";
 }
 
-<section class="features py-5">
-    <div class="container">
-        <div class="row g-4 align-items-stretch">
-            <!-- Left (Small) -->
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100 text-center p-4">
-                    <div class="mb-3">
-                        <span class="badge rounded-pill bg-success">Well-being</span>
-                    </div>
-                    <h4 class="fw-semibold">Daily Facts</h4>
-                    <p class="text-muted">Curated, evidence-based facts about how your body works.</p>
-                </div>
+<header class="storinta-hero-section text-center mt-n4">
+    <div class="container-fluid px-0">
+        <div class="container py-5 py-lg-6">
+            <h1 class="display-3 storinta-hero-title mb-3">Storinta</h1>
+            <p class="lead storinta-hero-subtitle">Stories, Simply Told.</p>
+            <p class="mt-4 storinta-hero-description mx-auto" style="max-width: 750px;">
+                Hayatın her köşesinden ilham veren, düşündüren ve "basitçe anlatılmış" hikayelerle dolu bir evren.
+                Storinta ile yeni pencereler açın, çünkü her kelime yeni bir keşiftir.
+            </p>
+            <div class="mt-5">
+                <a href="#featured-posts" class="btn btn-lg storinta-btn-primary me-sm-2 mb-2 mb-sm-0">Hikayeleri
+                    Keşfet</a>
+                <a asp-controller="Home" asp-action="About" class="btn btn-lg storinta-btn-secondary">Storinta
+                    Nedir?</a>
             </div>
-
-    <!-- Center (Large) -->
-<div class="col-md-6 d-flex align-items-stretch">
-    <div class="position-relative w-100 shadow-sm overflow-hidden" style="border-radius: 30px;">
-        <img src="/assets/img/expressive-senior-woman-posing.jpg"
-             alt="Smiling Woman"
-             class="img-fluid w-100"
-             style="height: 100%; max-height: 500px; object-fit: cover;" />
-
-        <!-- Glass Card -->
-        <div class="position-absolute top-0 end-0 m-3 p-3 glass-card text-start">
-            <i class="bi bi-box-arrow-up-right position-absolute top-0 end-0 m-2 fs-5" style="opacity: 0.7;"></i>
-            <h4 class="fw-bold mb-1">24k</h4>
-            <p class="mb-0 small">Women empowered through our magazines</p>
-        </div>
-
-        <!-- Triangle Dots -->
-        <div class="position-absolute w-100 h-100">
-            <span class="position-absolute start-0 bottom-0 m-3 dot-triangle"></span>
-            <span class="position-absolute end-0 bottom-0 m-3 dot-triangle"></span>
-            <span class="position-absolute top-0 start-50 translate-middle-x mt-3 dot-triangle"></span>
         </div>
     </div>
-</div>
+</header>
 
-            <!-- Right (Small) -->
-            <div class="col-md-3">
-                <div class="card border-0 shadow-sm h-100 text-center p-4">
-                    <div class="mb-3">
-                        <span class="badge rounded-pill bg-warning text-dark">Movement</span>
+<section id="featured-posts" class="py-5 storinta-section-bg">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="storinta-section-title">En Yeni ve Popüler Hikayeler</h2>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                <div class="card storinta-post-card shadow-sm w-100">
+                    <img src="~/assets/img/storinta-placeholder-1.jpg" class="card-img-top" alt="Yazı Görseli 1">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2"><span class="badge storinta-badge-accent">İlham Veren</span></div>
+                        <h5 class="card-title storinta-post-title">Sessizliğin Gücü: İç Huzura Yolculuk</h5>
+                        <p class="card-text text-muted small flex-grow-1">Gürültülü dünyada sessizliğin ve içsel
+                            dinginliğin değerini yeniden keşfedin.</p>
+                        <a href="#" class="btn btn-sm storinta-btn-outline-primary mt-auto align-self-start">Devamını
+                            Oku <i class="bi bi-arrow-right-short"></i></a>
                     </div>
-                    <h4 class="fw-semibold">Physical Insights</h4>
-                    <p class="text-muted">From posture to biomechanics, learn what your body says.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                <div class="card storinta-post-card shadow-sm w-100">
+                    <img src="~/assets/img/storinta-placeholder-2.jpg" class="card-img-top" alt="Yazı Görseli 2">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2"><span class="badge storinta-badge-secondary">Düşündüren</span></div>
+                        <h5 class="card-title storinta-post-title">Basit Yaşam Felsefesi</h5>
+                        <p class="card-text text-muted small flex-grow-1">Daha azıyla daha çok mutlu olmanın mümkün
+                            olduğunu gösteren pratik adımlar.</p>
+                        <a href="#" class="btn btn-sm storinta-btn-outline-primary mt-auto align-self-start">Devamını
+                            Oku <i class="bi bi-arrow-right-short"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 d-flex align-items-stretch">
+                <div class="card storinta-post-card shadow-sm w-100">
+                    <img src="~/assets/img/storinta-placeholder-3.jpg" class="card-img-top" alt="Yazı Görseli 3">
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2"><span class="badge storinta-badge-accent">Keşif</span></div>
+                        <h5 class="card-title storinta-post-title">Unutulmuş Sanatların İzinde</h5>
+                        <p class="card-text text-muted small flex-grow-1">Geçmişin kaybolmaya yüz tutmuş zanaatlarını ve
+                            sanatlarını yeniden gün yüzüne çıkarıyoruz.</p>
+                        <a href="#" class="btn btn-sm storinta-btn-outline-primary mt-auto align-self-start">Devamını
+                            Oku <i class="bi bi-arrow-right-short"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <a asp-controller="Blog" asp-action="Index" class="btn btn-lg storinta-btn-primary">Tüm Hikayeleri
+                    Gör</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="storinta-stats" class="py-5 storinta-stats-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <i class="bi bi-journal-richtext fs-1 storinta-icon-light mb-2"></i>
+                <h3 class="storinta-stat-number">500+</h3>
+                <p class="storinta-stat-label">Yayınlanmış Hikaye</p>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+                <i class="bi bi-people fs-1 storinta-icon-light mb-2"></i>
+                <h3 class="storinta-stat-number">10K+</h3>
+                <p class="storinta-stat-label">Mutlu Okuyucu</p>
+            </div>
+            <div class="col-md-4">
+                <i class="bi bi-bookmark-star fs-1 storinta-icon-light mb-2"></i>
+                <h3 class="storinta-stat-number">20+</h3>
+                <p class="storinta-stat-label">Zengin Kategori</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="categories-section" class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="storinta-section-title">Dünyaları Keşfedin</h2>
+                <p class="text-muted lead">İlgi alanlarınıza en uygun hikaye kategorilerine göz atın.</p>
+            </div>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+                <a href="#" class="storinta-category-card card text-decoration-none shadow-sm w-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-lightbulb fs-1 mb-3 storinta-icon-feature"></i>
+                        <h5 class="storinta-category-title">Fikir & İlham</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+                <a href="#" class="storinta-category-card card text-decoration-none shadow-sm w-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-compass fs-1 mb-3 storinta-icon-feature"></i>
+                        <h5 class="storinta-category-title">Gezi & Keşif</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+                <a href="#" class="storinta-category-card card text-decoration-none shadow-sm w-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-heart-pulse fs-1 mb-3 storinta-icon-feature"></i>
+                        <h5 class="storinta-category-title">Yaşam & Sağlık</h5>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg-3 d-flex align-items-stretch">
+                <a href="#" class="storinta-category-card card text-decoration-none shadow-sm w-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center p-4">
+                        <i class="bi bi-palette fs-1 mb-3 storinta-icon-feature"></i>
+                        <h5 class="storinta-category-title">Sanat & Kültür</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="why-storinta" class="py-5 storinta-section-bg">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="storinta-section-title">Storinta'yı Farklı Kılan Nedir?</h2>
+            </div>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="storinta-value-prop p-4">
+                    <i class="bi bi-check2-circle fs-2 mb-3 storinta-icon-primary"></i>
+                    <h5 class="storinta-value-title">Özenle Seçilmiş İçerik</h5>
+                    <p class="text-muted small">Her hikaye, size değer katması için editörlerimiz tarafından titizlikle
+                        incelenir ve seçilir.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="storinta-value-prop p-4">
+                    <i class="bi bi-chat-left-text fs-2 mb-3 storinta-icon-primary"></i>
+                    <h5 class="storinta-value-title">Basit ve Akıcı Anlatım</h5>
+                    <p class="text-muted small">Karmaşık konular bile herkesin anlayabileceği, keyifli ve sade bir dille
+                        sunulur.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="storinta-value-prop p-4">
+                    <i class="bi bi-eye fs-2 mb-3 storinta-icon-primary"></i>
+                    <h5 class="storinta-value-title">Geniş Perspektif Yelpazesi</h5>
+                    <p class="text-muted small">Farklı düşüncelere, kültürlere ve deneyimlere kapı açan zengin bir
+                        içerik çeşitliliği sunarız.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about-storinta-short" class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="~/assets/img/storinta-team-placeholder.jpg" alt="Storinta Ekibi"
+                    class="img-fluid rounded shadow-lg">
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <h2 class="storinta-section-title-left-align mb-3">Biz Kimiz?</h2>
+                <p class="lead text-muted">
+                    Storinta, kelimelerin gücüne inanan ve hikayelerin dünyayı değiştirebileceğine tutkuyla bağlı bir
+                    ekip tarafından kuruldu.
+                </p>
+                <p class="text-muted">
+                    Amacımız, bilgiye erişimi demokratikleştirmek ve herkesin kaliteli, ilham verici içeriklere kolayca
+                    ulaşmasını sağlamaktır. "Stories, Simply Told." mottomuzla, en karmaşık fikirleri bile anlaşılır ve
+                    keyifli bir şekilde sunmayı hedefleriz.
+                </p>
+                <a asp-controller="Home" asp-action="About" class="btn storinta-btn-primary mt-3">Ekibimizle Tanışın</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="storinta-testimonials" class="py-5 storinta-section-bg">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col text-center">
+                <h2 class="storinta-section-title">Okuyucularımız Ne Diyor?</h2>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="storinta-testimonial-card card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="~/assets/img/avatar-placeholder-1.jpg" alt="Okuyucu 1" class="rounded-circle me-3"
+                                width="60" height="60">
+                            <div>
+                                <h6 class="mb-0 storinta-testimonial-name">Ayşe Y.</h6>
+                                <small class="text-muted">Kitap Kurdu</small>
+                            </div>
+                        </div>
+                        <p class="storinta-testimonial-text fst-italic">
+                            "Storinta'daki hikayeler her zaman günümü aydınlatıyor. Hem bilgilendirici hem de çok akıcı.
+                            Teşekkürler!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="storinta-testimonial-card card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="~/assets/img/avatar-placeholder-2.jpg" alt="Okuyucu 2" class="rounded-circle me-3"
+                                width="60" height="60">
+                            <div>
+                                <h6 class="mb-0 storinta-testimonial-name">Mehmet K.</h6>
+                                <small class="text-muted">Meraklı Gezgin</small>
+                            </div>
+                        </div>
+                        <p class="storinta-testimonial-text fst-italic">
+                            "Farklı konularda bu kadar kaliteli ve sade anlatıma sahip başka bir platform bilmiyorum.
+                            Kesinlikle tavsiye ederim."
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="storinta-testimonial-card card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="~/assets/img/avatar-placeholder-3.jpg" alt="Okuyucu 3" class="rounded-circle me-3"
+                                width="60" height="60">
+                            <div>
+                                <h6 class="mb-0 storinta-testimonial-name">Zeynep A.</h6>
+                                <small class="text-muted">Yaşam Boyu Öğrenci</small>
+                            </div>
+                        </div>
+                        <p class="storinta-testimonial-text fst-italic">
+                            "Her gün yeni bir şeyler öğrenmek için Storinta'ya giriyorum. Basit anlatımı sayesinde
+                            karmaşık konular bile keyifli hale geliyor."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="subscribe-section" class="py-5 storinta-subscribe-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 col-md-9 mx-auto text-center">
+                <i class="bi bi-envelope-paper-heart fs-1 mb-3 storinta-icon-accent"></i>
+                <h2 class="storinta-section-title-light">Yeni Hikayelerden ve Özel İçeriklerden Haberdar Olun!</h2>
+                <p class="lead text-light opacity-75 mb-4 px-lg-5">
+                    E-posta bültenimize abone olarak Storinta dünyasındaki en son gelişmeleri ve size özel hikaye
+                    önerilerini kaçırmayın.
+                </p>
+                <form class="row g-2 justify-content-center align-items-center" asp-controller="Subscription"
+                    asp-action="Subscribe" method="post">
+                    <div class="col-sm-8 col-md-7 col-lg-6">
+                        <label for="emailSubscribeLanding" class="visually-hidden">E-posta Adresiniz</label>
+                        <input type="email" class="form-control form-control-lg" name="Email" id="emailSubscribeLanding"
+                            placeholder="E-posta adresinizi girin..." required>
+                    </div>
+                    <div class="col-sm-4 col-md-auto">
+                        <button type="submit" class="btn btn-lg storinta-btn-accent w-100">Şimdi Abone Ol</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="final-cta" class="py-5 text-center">
+    <div class="container">
+        <h2 class="storinta-section-title mb-3">Keşfetmeye Hazır mısınız?</h2>
+        <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
+            Storinta'nın sunduğu yüzlerce hikaye arasında kendi yolculuğunuza çıkın. <br class="d-none d-sm-block">
+            Bilgiye, ilhama ve yeni perspektiflere bir tık uzaktasınız.
+        </p>
+        <a asp-controller="Blog" asp-action="Index" class="btn btn-lg storinta-btn-primary">Hemen Okumaya Başla</a>
     </div>
 </section>
