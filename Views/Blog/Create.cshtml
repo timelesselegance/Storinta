@@ -3,86 +3,88 @@
     ViewData["Title"] = Model.Id == 0 ? "Yeni Blog Yazısı" : "Blog Yazısını Düzenle";
 }
 
-<h1>@ViewData["Title"]</h1>
+<div class="container py-4">
+    <h1>@ViewData["Title"]</h1>
 
-<form method="post" asp-controller="Blog" asp-action="@(Model.Id == 0 ? "Create" : "Edit")" asp-route-id="@(Model.Id)"
-    enctype="multipart/form-data" class="row g-3">
+    <form method="post" asp-controller="Blog" asp-action="@(Model.Id == 0 ? "Create" : "Edit")"
+        asp-route-id="@(Model.Id)" enctype="multipart/form-data" class="row g-3">
 
-    <!-- --------- SOL (Başlık / İçerik) --------- -->
-    <div class="col-md-8">
-        <!-- Başlık -->
-        <div class="mb-3">
-            <label asp-for="Title" class="form-label"></label>
-            <input asp-for="Title" class="form-control" id="titleInput" />
-            <span asp-validation-for="Title" class="text-danger"></span>
-        </div>
-
-        <!-- Slug -->
-        <div class="mb-3">
-            <label asp-for="Slug" class="form-label"></label>
-            <input asp-for="Slug" class="form-control" id="slugInput" readonly
-                style="pointer-events:none; background:#e9ecef;" />
-            <span asp-validation-for="Slug" class="text-danger"></span>
-        </div>
-
-        <!-- İçerik -->
-        <div class="mb-3">
-            <label asp-for="Content" class="form-label"></label>
-            <textarea asp-for="Content" class="form-control" rows="12" id="contentEditor"></textarea>
-            <span asp-validation-for="Content" class="text-danger"></span>
-        </div>
-    </div>
-
-    <!-- --------- SAĞ (Kategori / Görsel) --------- -->
-    <div class="col-md-4">
-        <div class="sticky-top" style="top:20px;">
-            <!-- Görsel -->
+        <!-- --------- SOL (Başlık / İçerik) --------- -->
+        <div class="col-md-8">
+            <!-- Başlık -->
             <div class="mb-3">
-                <label asp-for="FeaturedImageFile" class="form-label"></label>
-                <input asp-for="FeaturedImageFile" type="file" accept="image/*" class="form-control" />
-
-                <img id="featuredPreview" src="@Model.FeaturedImageUrl" class="img-fluid border mt-2"
-                    style="@(string.IsNullOrEmpty(Model.FeaturedImageUrl)
-                                                                                                                                                       ? "display:none; max-height:150px;"
-                                                                                                                                                       : "max-height:150px;")" />
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" id="titleInput" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
-            <!-- Kategori -->
+            <!-- Slug -->
             <div class="mb-3">
-                <label asp-for="CategoryId" class="form-label"></label>
-                <select asp-for="CategoryId"
-                    asp-items="@(new SelectList(Model.Categories, "Id", "Name", Model.CategoryId))" class="form-select">
-                    <option value="0">-- Seçiniz --</option>
-                </select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
+                <label asp-for="Slug" class="form-label"></label>
+                <input asp-for="Slug" class="form-control" id="slugInput" readonly
+                    style="pointer-events:none; background:#e9ecef;" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
 
-            <!-- Yeni kategori -->
+            <!-- İçerik -->
             <div class="mb-3">
-                <label asp-for="NewCategoryName" class="form-label"></label>
-                <input asp-for="NewCategoryName" class="form-control" placeholder="Yeni kategori adı" />
+                <label asp-for="Content" class="form-label"></label>
+                <textarea asp-for="Content" class="form-control" rows="12" id="contentEditor"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
             </div>
+        </div>
 
-            <!-- Yayın tarihi (sadece düzenlemede) -->
-            @if (Model.Id != 0)
-            {
+        <!-- --------- SAĞ (Kategori / Görsel) --------- -->
+        <div class="col-md-4">
+            <div class="sticky-top" style="top:20px;">
+                <!-- Görsel -->
                 <div class="mb-3">
-                    <label class="form-label">Yayınlama Tarihi</label>
-                    <input class="form-control" type="datetime-local"
-                        value="@Model.PublishedOn?.ToString("yyyy-MM-ddTHH:mm")" readonly
-                        style="pointer-events:none; background:#e9ecef;" />
-                </div>
-            }
+                    <label asp-for="FeaturedImageFile" class="form-label"></label>
+                    <input asp-for="FeaturedImageFile" type="file" accept="image/*" class="form-control" />
 
-            <!-- Butonlar -->
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-success">Kaydet</button>
-                <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                    <img id="featuredPreview" src="@Model.FeaturedImageUrl" class="img-fluid border mt-2"
+                        style="@(string.IsNullOrEmpty(Model.FeaturedImageUrl)
+                                                                                                                                                                               ? "display:none; max-height:150px;"
+                                                                                                                                                                               : "max-height:150px;")" />
+                </div>
+
+                <!-- Kategori -->
+                <div class="mb-3">
+                    <label asp-for="CategoryId" class="form-label"></label>
+                    <select asp-for="CategoryId"
+                        asp-items="@(new SelectList(Model.Categories, "Id", "Name", Model.CategoryId))"
+                        class="form-select">
+                        <option value="0">-- Seçiniz --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+
+                <!-- Yeni kategori -->
+                <div class="mb-3">
+                    <label asp-for="NewCategoryName" class="form-label"></label>
+                    <input asp-for="NewCategoryName" class="form-control" placeholder="Yeni kategori adı" />
+                </div>
+
+                <!-- Yayın tarihi (sadece düzenlemede) -->
+                @if (Model.Id != 0)
+                {
+                    <div class="mb-3">
+                        <label class="form-label">Yayınlama Tarihi</label>
+                        <input class="form-control" type="datetime-local"
+                            value="@Model.PublishedOn?.ToString("yyyy-MM-ddTHH:mm")" readonly
+                            style="pointer-events:none; background:#e9ecef;" />
+                    </div>
+                }
+
+                <!-- Butonlar -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success">Kaydet</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+                </div>
             </div>
         </div>
-    </div>
-</form>
-
+    </form>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
