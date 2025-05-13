@@ -621,3 +621,143 @@ h6 { font-size: 1rem; }
   display: inline-block;
   font-weight: 500;
 }
+
+
+/* ==========================================================================
+   Kimlik Doğrulama Sayfaları Stilleri (Login, Register vb.)
+   ========================================================================== */
+
+   .storinta-auth-card {
+    background-color: var(--storinta-color-surface); /* Beyaz kart arka planı */
+    border: 1px solid var(--storinta-color-border);
+    border-radius: var(--radius); /* Genel radius değişkeniniz */
+    /* shadow-lg Bootstrap sınıfı zaten gölge veriyor, isterseniz özelleştirin: */
+    /* box-shadow: 0 0.5rem 1.5rem rgba(var(--storinta-color-primary-rgb, 0, 48, 73), 0.1); */
+}
+
+.storinta-auth-logo-link {
+    text-decoration: none;
+}
+.storinta-auth-logo-link:hover .storinta-auth-header {
+    color: var(--storinta-color-accent); /* Logo/Başlık hover rengi */
+}
+
+.storinta-auth-header { /* Login, Register gibi sayfa başlıkları için (h1, h2) */
+    font-family: var(--storinta-font-heading);
+    color: var(--storinta-color-heading);
+    /* font-size: 2rem; /* h1 genel stilinden alır, gerekirse ezin */
+    margin-bottom: 0.5rem; /* Altındaki paragrafla boşluk */
+}
+
+.storinta-auth-card .card-body p.text-muted { /* Başlık altı açıklama metni */
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Elemanları */
+.storinta-form-control {
+    font-family: var(--storinta-font-body);
+    background-color: var(--storinta-color-background); /* Hafif farklı bir arka plan */
+    border: 1px solid var(--storinta-color-border);
+    color: var(--storinta-color-text);
+    border-radius: calc(var(--radius) - 2px); /* Floating label ile daha iyi uyum */
+}
+.storinta-form-control:focus {
+    background-color: var(--storinta-color-surface);
+    border-color: var(--storinta-color-accent);
+    box-shadow: 0 0 0 0.2rem rgba(var(--storinta-color-accent-rgb, 255, 183, 3), 0.3); /* Mevcut focus stilinizle uyumlu */
+}
+
+.form-floating > label.form-label {
+    font-family: var(--storinta-font-body);
+    color: var(--storinta-color-muted);
+}
+
+/* Checkbox */
+.storinta-form-check-input {
+    border-color: var(--storinta-color-border);
+}
+.storinta-form-check-input:checked {
+    background-color: var(--storinta-color-primary);
+    border-color: var(--storinta-color-primary);
+}
+.storinta-form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(var(--storinta-color-primary-rgb, 0, 48, 73), 0.25);
+}
+.form-check-label.small {
+    font-family: var(--storinta-font-body);
+}
+
+
+/* Butonlar */
+.storinta-auth-button.btn-primary { /* Ana Giriş/Kayıt butonu */
+    /* .btn-primary genel stilinizi kullanır (Storinta ana rengiyle güncellenmiş olmalı) */
+    /* Gerekirse ek özelleştirmeler: */
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    font-size: 1.05rem; /* Biraz daha büyük */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Linkler */
+.storinta-auth-links a.storinta-auth-link {
+    color: var(--storinta-color-primary); /* Normalde koyu mavi linkler */
+    text-decoration: none;
+    font-weight: 500;
+}
+.storinta-auth-links a.storinta-auth-link:hover {
+    color: var(--storinta-color-accent); /* Hover'da sarı */
+    text-decoration: underline;
+}
+
+/* Harici Giriş Bölümü */
+.storinta-auth-separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-family: var(--storinta-font-body);
+    font-size: 0.8rem;
+    color: var(--storinta-color-muted);
+    margin-top: 1.5rem; /* Üstteki formla boşluk */
+}
+.storinta-auth-separator::before,
+.storinta-auth-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--storinta-color-border);
+}
+.storinta-auth-separator:not(:empty)::before {
+    margin-right: .5em;
+}
+.storinta-auth-separator:not(:empty)::after {
+    margin-left: .5em;
+}
+
+.storinta-btn-external-login {
+    font-family: var(--storinta-font-body);
+    font-weight: 500;
+    background-color: var(--storinta-color-surface);
+    color: var(--storinta-color-text);
+    border: 1px solid var(--storinta-color-border);
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius);
+    transition: all var(--transition);
+    display: flex; /* İkon ve yazı hizalaması için */
+    align-items: center;
+    justify-content: center;
+}
+.storinta-btn-external-login:hover {
+    background-color: var(--storinta-section-bg); /* Hafif gri hover */
+    border-color: #adb5bd; /* Biraz daha belirgin border */
+    color: var(--storinta-color-primary);
+}
+.storinta-btn-external-login i { /* Harici giriş butonlarındaki ikonlar için */
+    font-size: 1.2em; /* Yazıya göre biraz büyük */
+}
+
+/* Hata Mesajları (Bootstrap .text-danger üzerine ek) */
+.text-danger.small { /* Validation mesajları için */
+    font-family: var(--storinta-font-body);
+    font-size: 0.8rem; /* Biraz daha küçük */
+}
