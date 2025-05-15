@@ -290,6 +290,24 @@ public async Task<IActionResult> AddComment(string slug, string content)
     await _db.SaveChangesAsync();
     return RedirectToAction(nameof(Details), new { slug });
 }
+// Sadece girişli kullanıcılar görebilsin
+[Authorize]
+[HttpGet("mine")]
+public async Task<IActionResult> MyPosts()
+{
+    // 1. Kullanıcı Id’si
+    var userId = _userManager.GetUserId(User);
+
+    // 2. Bu kullanıcıya ait blogları çek (kategori ve author dahil)
+    var posts = await _db.BlogPosts
+                         .Where(p => p.AuthorId == userId)
+                         .Include(p => p.Category)
+                         .OrderByDescending(p => p.PublishedOn ?? p.CreatedOn)
+                         .ToListAsync();
+
+    // 3. View’a gönder
+    return View(posts);
+}
 
 
       /* ---------- EDIT ---------- */

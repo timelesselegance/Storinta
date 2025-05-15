@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Identity
 @using HumanBodyWeb.Models
 @inject UserManager<ApplicationUser> UserManager
+@inject HumanBodyWeb.Data.ApplicationDbContext _db
 
 @{
     ViewData["Title"] = "Kaydedilen Yazılar";
@@ -25,7 +26,18 @@
             @foreach (var post in Model)
             {
                 <div class="col-md-6 mb-4">
-                    <div class="card h-100">
+                    <div class="card h-100 position-relative">
+                        @* Unsave butonu (sağ üstte) *@
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <form asp-action="ToggleSave" asp-route-id="@post.Id" method="post"
+                                class="position-absolute top-0 end-0 m-2">
+                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Kaydı Kaldır">
+                                    <i class="bi bi-bookmark-x-fill"></i>
+                                </button>
+                            </form>
+                        }
+
                         @* Featured Image *@
                         @if (!string.IsNullOrEmpty(post.FeaturedImageUrl))
                         {
@@ -40,7 +52,9 @@
                                     @($" on {post.PublishedOn.Value:dd MMM yyyy}")
                                 }
                             </h6>
-                            <p class="card-text flex-grow-1">@Excerpt(post.Content)</p>
+                            <p class="card-text flex-grow-1">
+                                @Excerpt(post.Content)
+                            </p>
                             <small class="text-muted mb-2">👁️ @post.ViewCount</small>
                             <div class="mt-auto">
                                 <a asp-action="Details" asp-route-slug="@post.Slug" class="btn btn-primary">
@@ -60,7 +74,6 @@
     {
         if (string.IsNullOrWhiteSpace(html))
             return string.Empty;
-
         var text = Regex.Replace(html, "<.*?>", string.Empty);
         text = WebUtility.HtmlDecode(text);
         return Regex.Replace(text, @"\s{2,}", " ").Trim();
@@ -72,7 +85,6 @@
         var tokens = plain.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         if (tokens.Length <= words)
             return plain;
-
         return string.Join(' ', tokens.Take(words)) + "…";
     }
 }

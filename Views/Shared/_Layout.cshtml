@@ -38,9 +38,13 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
                     </li>
-                       <li class="nav-item"></li>
+                       <li class="nav-item">
         <a class="nav-link" asp-controller="Blog" asp-action="SavedPosts">Kaydedilen Yazılar</a>
     </li>
+    <li class="nav-item">
+  <a class="nav-link" asp-controller="Blog" asp-action="MyPosts">Bloglarım</a>
+</li>
+
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
