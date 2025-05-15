@@ -48,7 +48,7 @@
     <!-- Düzenle / Sil Butonları (Admin veya Yazı Sahibi) -->
     @if (User.IsInRole("Admin") || (User.IsInRole("Editor") && Model.AuthorId == currentUserId))
     {
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 mb-5">
             <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">
                 <i class="bi bi-pencil me-1"></i>Edit
             </a>
@@ -60,4 +60,48 @@
             </form>
         </div>
     }
+
+    <!-- YORUMLAR BÖLÜMÜ -->
+    <section class="mt-5">
+        <h3>@Model.Comments.Count() yorum</h3>
+
+        @if (!Model.Comments.Any())
+        {
+            <p>Henüz yorum yok. İlk yorumu siz yapın!</p>
+        }
+        else
+        {
+            <ul class="list-unstyled">
+                @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreatedOn))
+                {
+                    <li class="mb-3 p-3 border rounded">
+                        <p class="mb-1">@comment.Content</p>
+                        <small class="text-muted">
+                            By <strong>@comment.User.UserName</strong>
+                            on @comment.CreatedOn.ToString("g")
+                        </small>
+                    </li>
+                }
+            </ul>
+        }
+
+        @if (User.Identity?.IsAuthenticated ?? false)
+        {
+            <form asp-action="AddComment" asp-route-slug="@Model.Slug" method="post">
+                <div class="mb-3">
+                    <label for="content" class="form-label">Yeni Yorum</label>
+                    <textarea name="content" id="content" class="form-control" rows="4"
+                    placeholder="Yorumunuzu buraya yazın..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
+            </form>
+        }
+        else
+        {
+            <p class="text-muted">
+                Yorum yazmak için lütfen
+                <a asp-area="" asp-controller="Account" asp-action="Login">giriş yapın</a>.
+            </p>
+        }
+    </section>
 </article>

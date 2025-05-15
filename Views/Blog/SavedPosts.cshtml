@@ -1,0 +1,78 @@
+@model List<HumanBodyWeb.Models.BlogPost>
+@using System.Text.RegularExpressions
+@using System.Net
+@using Microsoft.AspNetCore.Identity
+@using HumanBodyWeb.Models
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Kaydedilen Yazılar";
+    var currentUserId = User.Identity?.IsAuthenticated == true
+    ? UserManager.GetUserId(User)
+    : null;
+}
+
+<div class="container py-4">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    @if (!Model.Any())
+    {
+        <p>Henüz hiç yazı kaydetmediniz.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var post in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        @* Featured Image *@
+                        @if (!string.IsNullOrEmpty(post.FeaturedImageUrl))
+                        {
+                            <img src="@post.FeaturedImageUrl" class="card-img-top" style="height:250px;object-fit:cover;" />
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h3 class="card-title">@post.Title</h3>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                By @post.Author.UserName
+                                @if (post.PublishedOn.HasValue)
+                                {
+                                    @($" on {post.PublishedOn.Value:dd MMM yyyy}")
+                                }
+                            </h6>
+                            <p class="card-text flex-grow-1">@Excerpt(post.Content)</p>
+                            <small class="text-muted mb-2">👁️ @post.ViewCount</small>
+                            <div class="mt-auto">
+                                <a asp-action="Details" asp-route-slug="@post.Slug" class="btn btn-primary">
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@functions {
+    private static string HtmlToPlain(string html)
+    {
+        if (string.IsNullOrWhiteSpace(html))
+            return string.Empty;
+
+        var text = Regex.Replace(html, "<.*?>", string.Empty);
+        text = WebUtility.HtmlDecode(text);
+        return Regex.Replace(text, @"\s{2,}", " ").Trim();
+    }
+
+    private static string Excerpt(string html, int words = 30)
+    {
+        var plain = HtmlToPlain(html);
+        var tokens = plain.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (tokens.Length <= words)
+            return plain;
+
+        return string.Join(' ', tokens.Take(words)) + "…";
+    }
+}

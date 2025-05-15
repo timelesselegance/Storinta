@@ -148,13 +148,15 @@ namespace HumanBodyWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       /* ---------- DETAILS ---------- */
+     /* ---------- DETAILS ---------- */
 [AllowAnonymous, HttpGet("{slug}")]
 public async Task<IActionResult> Details(string slug)
 {
     var post = await _db.BlogPosts
                         .Include(p => p.Author)
                         .Include(p => p.Category)
+                        .Include(p => p.Comments)
+                            .ThenInclude(c => c.User)
                         .FirstOrDefaultAsync(p => p.Slug == slug);
     if (post == null)
     {
@@ -175,8 +177,8 @@ public async Task<IActionResult> Details(string slug)
         if (!hasViewed)
         {
             _db.PostUserViews.Add(new PostUserView {
-                PostId   = post.Id,
-                UserId   = userId
+                PostId = post.Id,
+                UserId = userId
             });
             post.ViewCount++;
             await _db.SaveChangesAsync();
@@ -204,6 +206,89 @@ public async Task<IActionResult> Details(string slug)
     }
 
     return View(post);
+}
+/// <summary>
+/// Bir yazıyı kaydeder veya zaten kayıtlıysa siler (toggle).
+/// </summary>
+[Authorize]
+[HttpPost("{id:int}/save")]
+public async Task<IActionResult> ToggleSave(int id)
+{
+    // 1. Yazıyı bulalım
+    var post = await _db.BlogPosts.FindAsync(id);
+    if (post == null) return NotFound();
+
+    // 2. Kullanıcı Id’si
+    var userId = _userManager.GetUserId(User)!;
+
+    // 3. Kaydedilmiş mi diye kontrol
+    var existing = await _db.SavedPosts
+        .FirstOrDefaultAsync(s => s.PostId == id && s.UserId == userId);
+
+    if (existing != null)
+    {
+        // Zaten kayıtlıysa sil
+        _db.SavedPosts.Remove(existing);
+    }
+    else
+    {
+        // Değilse yeni kayıt ekle
+        _db.SavedPosts.Add(new SavedPost {
+            PostId = id,
+            UserId = userId
+        });
+    }
+
+    await _db.SaveChangesAsync();
+    // Referer’dan geri dönelim
+    return Redirect(Request.Headers["Referer"].ToString());
+}
+
+/// <summary>
+/// Oturumdaki kullanıcının kaydettiği tüm yazıları listeler.
+/// </summary>
+[Authorize]
+[HttpGet("saved")]
+public async Task<IActionResult> SavedPosts()
+{
+    var userId = _userManager.GetUserId(User);
+    var saved = await _db.SavedPosts
+        .Where(s => s.UserId == userId)
+        .Include(s => s.Post)
+            .ThenInclude(p => p.Author)
+        .Include(s => s.Post)
+            .ThenInclude(p => p.Category)
+        .OrderByDescending(s => s.SavedOn)
+        .ToListAsync();
+
+    // ViewModel olarak sadece Post objelerini gönderelim
+    var posts = saved.Select(s => s.Post).ToList();
+    return View(posts);
+}
+/* ---------- ADD COMMENT ---------- */
+[Authorize]
+[HttpPost("{slug}/comment"), ValidateAntiForgeryToken]
+public async Task<IActionResult> AddComment(string slug, string content)
+{
+    if (string.IsNullOrWhiteSpace(content))
+        return RedirectToAction(nameof(Details), new { slug });
+
+    var post = await _db.BlogPosts.FirstOrDefaultAsync(p => p.Slug == slug);
+    if (post == null)
+        return NotFound();
+
+   var userId = _userManager.GetUserId(User)!;
+    var comment = new Comment
+    {
+        PostId    = post.Id,
+        UserId    = userId,
+        Content   = content.Trim(),
+        CreatedOn = DateTime.UtcNow
+    };
+
+    _db.Comments.Add(comment);
+    await _db.SaveChangesAsync();
+    return RedirectToAction(nameof(Details), new { slug });
 }
 
 

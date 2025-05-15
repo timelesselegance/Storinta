@@ -43,6 +43,8 @@ namespace HumanBodyWeb.Models
         public string AuthorId { get; set; } = null!;
         public virtual ApplicationUser Author { get; set; } = null!;
         public int ViewCount { get; set; } = 0;
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
 
         public BlogPost()
         {
