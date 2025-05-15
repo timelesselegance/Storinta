@@ -42,6 +42,7 @@ namespace HumanBodyWeb.Models
         [Required]
         public string AuthorId { get; set; } = null!;
         public virtual ApplicationUser Author { get; set; } = null!;
+        public int ViewCount { get; set; } = 0;
 
         public BlogPost()
         {

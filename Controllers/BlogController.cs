@@ -148,21 +148,64 @@ namespace HumanBodyWeb.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        /* ---------- DETAILS ---------- */
-        [AllowAnonymous, HttpGet("{slug}")]
-        public async Task<IActionResult> Details(string slug)
+       /* ---------- DETAILS ---------- */
+[AllowAnonymous, HttpGet("{slug}")]
+public async Task<IActionResult> Details(string slug)
+{
+    var post = await _db.BlogPosts
+                        .Include(p => p.Author)
+                        .Include(p => p.Category)
+                        .FirstOrDefaultAsync(p => p.Slug == slug);
+    if (post == null)
+    {
+        _logger.LogWarning("Detayları görüntülenmek istenen blog yazısı bulunamadı. Slug: {Slug}", slug);
+        return NotFound();
+    }
+
+    // Oturum açmış kullanıcı Id’si
+    string? userId = User.Identity?.IsAuthenticated == true
+                     ? _userManager.GetUserId(User)
+                     : null;
+
+    if (userId != null)
+    {
+        // Loginli kullanıcı: daha önce görmüş mü?
+        bool hasViewed = await _db.PostUserViews
+                                  .AnyAsync(v => v.PostId == post.Id && v.UserId == userId);
+        if (!hasViewed)
         {
-            var post = await _db.BlogPosts
-                                .Include(p => p.Author)
-                                .Include(p => p.Category)
-                                .FirstOrDefaultAsync(p => p.Slug == slug);
-            if (post == null)
-            {
-                _logger.LogWarning("Detayları görüntülenmek istenen blog yazısı bulunamadı. Slug: {Slug}", slug);
-                return NotFound();
-            }
-            return View(post);
+            _db.PostUserViews.Add(new PostUserView {
+                PostId   = post.Id,
+                UserId   = userId
+            });
+            post.ViewCount++;
+            await _db.SaveChangesAsync();
         }
+    }
+    else
+    {
+        // Anonim kullanıcı: cookie’de kontrol
+        var cookie = Request.Cookies["ViewedPosts"];
+        var viewed = string.IsNullOrEmpty(cookie)
+                     ? new HashSet<int>()
+                     : new HashSet<int>(cookie.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse));
+
+        if (!viewed.Contains(post.Id))
+        {
+            viewed.Add(post.Id);
+            Response.Cookies.Append(
+                "ViewedPosts",
+                string.Join(",", viewed),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddDays(30) }
+            );
+            post.ViewCount++;
+            await _db.SaveChangesAsync();
+        }
+    }
+
+    return View(post);
+}
+
 
       /* ---------- EDIT ---------- */
 [Authorize(Roles = "Editor,Admin")]

@@ -13,6 +13,8 @@ namespace HumanBodyWeb.Data
 
         public DbSet<BlogPost> BlogPosts { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<PostUserView> PostUserViews { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

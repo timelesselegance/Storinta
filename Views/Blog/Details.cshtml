@@ -1,54 +1,61 @@
 @model HumanBodyWeb.Models.BlogPost
 @using System.Net
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = Model.Title;
     var readableDate = Model.PublishedOn?.ToString("dd MMMM yyyy");
+    var currentUserId = User.Identity?.IsAuthenticated == true
+    ? UserManager.GetUserId(User)
+    : null;
 }
 
 <article class="container py-4">
-
-    <!-- ---------- Başlık & Kategori ---------- -->
+    <!-- Başlık & Meta -->
     <h1 class="display-5 fw-bold">@Model.Title</h1>
+    <p class="text-muted mb-2">
+        @* Kategori *@
+        @if (Model.Category != null)
+        {
+            <span class="badge bg-secondary me-2">@Model.Category.Name</span>
+        }
+        @* Yazar ve Tarih *@
+        By <strong>@Model.Author.UserName</strong>
+        on <em>@readableDate</em>
+        @* Görüntülenme Sayısı *@
+        • 👁️ @Model.ViewCount
+    </p>
 
-    @* Kategori adı varsa göster *@
-    @if (Model.Category != null)
-    {
-        <span class="badge bg-secondary me-2">@Model.Category.Name</span>
-    }
-
-    <span class="text-muted">@readableDate</span>
-
-    <!-- ---------- Öne çıkarılmış görsel ---------- -->
+    <!-- Öne Çıkarılmış Görsel -->
     @if (!string.IsNullOrEmpty(Model.FeaturedImageUrl))
     {
-        <div class=" my-4">
+        <div class="my-4 text-center">
             <img src="@Model.FeaturedImageUrl" alt="@Model.Title" class="img-fluid rounded shadow-sm"
                 style="max-width:600px; width:100%; height:auto;" />
         </div>
     }
 
-    <!-- ---------- İçerik ---------- -->
-    <div class="post-body">
+    <!-- İçerik -->
+    <div class="post-body mb-5">
         @Html.Raw(
         WebUtility.HtmlDecode(
-        WebUtility.HtmlDecode(Model.Content) /* iki kat decode - eski veriler için */
+        WebUtility.HtmlDecode(Model.Content)
         )
                 )
     </div>
 
-    <!-- ---------- Düzenle / Sil (yalnızca oturum açık) ---------- -->
-    @if (User.Identity?.IsAuthenticated ?? false)
+    <!-- Düzenle / Sil Butonları (Admin veya Yazı Sahibi) -->
+    @if (User.IsInRole("Admin") || (User.IsInRole("Editor") && Model.AuthorId == currentUserId))
     {
-        <div class="mt-4">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary me-2">
-                <i class="bi bi-pencil me-1"></i> Edit
+        <div class="d-flex gap-2">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">
+                <i class="bi bi-pencil me-1"></i>Edit
             </a>
-
-            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-inline"
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post"
                 onsubmit="return confirm('Bu yazıyı silmek istediğinize emin misiniz?');">
                 <button type="submit" class="btn btn-outline-danger">
-                    <i class="bi bi-trash me-1"></i> Delete
+                    <i class="bi bi-trash me-1"></i>Delete
                 </button>
             </form>
         </div>
