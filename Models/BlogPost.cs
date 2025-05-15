@@ -1,9 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations; // [Required] gibi attribute'lar için
-using System.ComponentModel.DataAnnotations.Schema; // [NotMapped] attribute'u için
+using System.ComponentModel.DataAnnotations.Schema; // [NotMapped] için
 using Microsoft.AspNetCore.Http; // IFormFile için
 
-namespace HumanBodyWeb.Models // Namespace'inizin doğru olduğundan emin olun
+namespace HumanBodyWeb.Models
 {
     public class BlogPost
     {
@@ -11,7 +11,7 @@ namespace HumanBodyWeb.Models // Namespace'inizin doğru olduğundan emin olun
 
         [Required(ErrorMessage = "Başlık alanı gereklidir.")]
         [StringLength(200, ErrorMessage = "Başlık en fazla 200 karakter olabilir.")]
-        public string Title { get; set; } = null!; // null!; EF Core tarafından atanacağını varsayar
+        public string Title { get; set; } = null!;
 
         [Required(ErrorMessage = "Slug alanı gereklidir.")]
         [StringLength(250, ErrorMessage = "Slug en fazla 250 karakter olabilir.")]
@@ -20,34 +20,32 @@ namespace HumanBodyWeb.Models // Namespace'inizin doğru olduğundan emin olun
         [Required(ErrorMessage = "İçerik alanı gereklidir.")]
         public string Content { get; set; } = null!;
 
-        public string? FeaturedImageUrl { get; set; } // Cloudinary URL'si için
+        public string? FeaturedImageUrl { get; set; }
+        public string? FeaturedImagePublicId { get; set; }
 
-        // --- DÜZELTME: public erişim belirleyicisi eklendi ---
-        public string? FeaturedImagePublicId { get; set; } // Cloudinary Public ID'si için
+        [NotMapped]
+        public IFormFile? FeaturedImageFile { get; set; }
 
-        [NotMapped] // Bu alan veritabanına kaydedilmeyecek
-        public IFormFile? FeaturedImageFile { get; set; } // Görsel yükleme formu için
-
+        [Required]
         public bool IsDraft { get; set; }
 
-        // --- YENİ EKLENEN ÖZELLİKLER ---
+        [Required]
         public DateTime CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; } // Null olabilir, çünkü her yazı hemen güncellenmeyebilir
-        // --- ---
-
-        public DateTime? PublishedOn { get; set; } // Varsayılan olarak null bırakmak daha iyi olabilir,
-                                                   // ve yayınlandığında controller'da set edilebilir.
-                                                   // Ya da: = null;
+        public DateTime? UpdatedOn { get; set; }
+        public DateTime? PublishedOn { get; set; }
 
         [Required(ErrorMessage = "Kategori seçimi gereklidir.")]
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; } = null!; // Navigation property
+        public virtual Category Category { get; set; } = null!;
 
-        // Constructor (İsteğe bağlı: bazı varsayılan değerleri atamak için)
+        // Yeni eklenen yazar bilgisi
+        [Required]
+        public string AuthorId { get; set; } = null!;
+        public virtual ApplicationUser Author { get; set; } = null!;
+
         public BlogPost()
         {
-            CreatedOn = DateTime.UtcNow; // Yeni bir BlogPost oluşturulduğunda CreatedOn otomatik atansın
-            // PublishedOn = IsDraft ? null : DateTime.UtcNow; // Bu tür bir mantık da eklenebilir
+            CreatedOn = DateTime.UtcNow;
         }
     }
 }
