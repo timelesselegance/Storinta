@@ -4,12 +4,11 @@
 
 namespace HumanBodyWeb.Migrations
 {
-    /// <inheritdoc />
     public partial class AddAuthorToBlogPost : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // 1) AuthorId sütununu ekle
             migrationBuilder.AddColumn<string>(
                 name: "AuthorId",
                 table: "BlogPosts",
@@ -17,11 +16,20 @@ namespace HumanBodyWeb.Migrations
                 nullable: false,
                 defaultValue: "720b098a-234b-42df-bff0-d4495849ac00");
 
+            // 2) Mevcut kayıtlar için geçerli bir AuthorId ata
+            migrationBuilder.Sql(@"
+                UPDATE ""BlogPosts""
+                SET ""AuthorId"" = '720b098a-234b-42df-bff0-d4495849ac00'
+                WHERE ""AuthorId"" IS NULL OR ""AuthorId"" = '';"
+            );
+
+            // 3) Index oluştur
             migrationBuilder.CreateIndex(
                 name: "IX_BlogPosts_AuthorId",
                 table: "BlogPosts",
                 column: "AuthorId");
 
+            // 4) Foreign key ekle
             migrationBuilder.AddForeignKey(
                 name: "FK_BlogPosts_AspNetUsers_AuthorId",
                 table: "BlogPosts",
@@ -31,7 +39,6 @@ namespace HumanBodyWeb.Migrations
                 onDelete: ReferentialAction.Cascade);
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
