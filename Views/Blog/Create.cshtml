@@ -9,24 +9,19 @@
     <form method="post" asp-controller="Blog" asp-action="@(Model.Id == 0 ? "Create" : "Edit")"
         asp-route-id="@(Model.Id)" enctype="multipart/form-data" class="row g-3">
 
-        <!-- --------- SOL (Başlık / İçerik) --------- -->
+        <!-- SOL (Başlık / İçerik) -->
         <div class="col-md-8">
-            <!-- Başlık -->
             <div class="mb-3">
                 <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control" id="titleInput" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-
-            <!-- Slug -->
             <div class="mb-3">
                 <label asp-for="Slug" class="form-label"></label>
                 <input asp-for="Slug" class="form-control" id="slugInput" readonly
                     style="pointer-events:none; background:#e9ecef;" />
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
-
-            <!-- İçerik -->
             <div class="mb-3">
                 <label asp-for="Content" class="form-label"></label>
                 <textarea asp-for="Content" class="form-control" rows="12" id="contentEditor"></textarea>
@@ -34,21 +29,20 @@
             </div>
         </div>
 
-        <!-- --------- SAĞ (Kategori / Görsel) --------- -->
+        <!-- SAĞ (Kategori / Görsel) -->
         <div class="col-md-4">
             <div class="sticky-top" style="top:20px;">
-                <!-- Görsel -->
+                <div class="mb-3">
+                    <button type="button" class="btn btn-secondary w-100 mb-2" onclick="openGallery()">
+                        Galeriden Resim Seç
+                    </button>
+                </div>
                 <div class="mb-3">
                     <label asp-for="FeaturedImageFile" class="form-label"></label>
                     <input asp-for="FeaturedImageFile" type="file" accept="image/*" class="form-control" />
-
                     <img id="featuredPreview" src="@Model.FeaturedImageUrl" class="img-fluid border mt-2"
-                        style="@(string.IsNullOrEmpty(Model.FeaturedImageUrl)
-                                                                                                                                                                                                                                                       ? "display:none; max-height:150px;"
-                                                                                                                                                                                                                                                       : "max-height:150px;")" />
+                        style="@(string.IsNullOrEmpty(Model.FeaturedImageUrl) ? "display:none; max-height:150px;" : "max-height:150px;")" />
                 </div>
-
-                <!-- Kategori -->
                 <div class="mb-3">
                     <label asp-for="CategoryId" class="form-label"></label>
                     <select asp-for="CategoryId"
@@ -58,14 +52,10 @@
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
-
-                <!-- Yeni kategori -->
                 <div class="mb-3">
                     <label asp-for="NewCategoryName" class="form-label"></label>
                     <input asp-for="NewCategoryName" class="form-control" placeholder="Yeni kategori adı" />
                 </div>
-
-                <!-- Yayın tarihi (sadece düzenlemede) -->
                 @if (Model.Id != 0)
                 {
                     <div class="mb-3">
@@ -75,8 +65,6 @@
                             style="pointer-events:none; background:#e9ecef;" />
                     </div>
                 }
-
-                <!-- Butonlar -->
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-success">Kaydet</button>
                     <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
@@ -85,41 +73,186 @@
         </div>
     </form>
 </div>
+
+<!-- Galeri Modal -->
+<div class="modal fade" id="imageManagerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Resim Galerisi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Detay Paneli -->
+                    <div class="col-md-4 border-end">
+                        <div id="imageDetails" class="text-center">
+                            <img id="detailImage" src="" class="img-fluid mb-2"
+                                style="display:none; max-height:200px;" />
+                            <p id="detailTitle" class="fw-bold"></p>
+                            <!-- Display Settings -->
+                            <div class="mb-2">
+                                <label class="form-label">Align</label>
+                                <div class="btn-group" role="group" aria-label="Alignment">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        data-align="left">Left</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        data-align="center">Center</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        data-align="right">Right</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm"
+                                        data-align="none">None</button>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Size</label>
+                                <select id="imageSizeSelect" class="form-select form-select-sm">
+                                    <option value="150x150">Thumbnail – 150 × 150</option>
+                                    <option value="300x300" selected>Medium – 300 × 300</option>
+                                    <option value="640x640">Large – 640 × 640</option>
+                                    <option value="full">Full Size – Original</option>
+                                    <option value="custom">Custom Size</option>
+                                </select>
+                                <!-- Custom size inputs -->
+                                <div class="d-flex mt-2" id="customSizeInputs" style="display:none;">
+                                    <input type="number" id="customWidth" class="form-control form-control-sm me-1"
+                                        placeholder="W" />
+                                    <input type="number" id="customHeight" class="form-control form-control-sm"
+                                        placeholder="H" />
+                                </div>
+                            </div>
+                            <button id="addToTextBtn" class="btn btn-primary btn-sm w-100" disabled>Add to Text</button>
+                            <button id="deleteImageBtn" class="btn btn-danger btn-sm w-100 mt-1"
+                                style="display:none;">Fotoğrafı Sil</button>
+                        </div>
+                    </div>
+                    <!-- Galeri Listesi -->
+                    <div class="col-md-8">
+                        <div class="mb-3">
+                            <input type="file" id="uploadInput" accept="image/*" class="form-control" />
+                        </div>
+                        <div id="imagesList" class="d-flex flex-wrap"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
     <script src="https://cdn.tiny.cloud/1/lcnkjq3sz08uemsgjb8tihe75bkz7tuwou0si25cpimm92cp/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
-
     <script>
-        /* Title ➜ Slug */
-        document.getElementById('titleInput').addEventListener('input', e => {
-            const slug = e.target.value
-                .toLowerCase()
-                .trim()
-                .replace(/[\s\W-]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-            document.getElementById('slugInput').value = slug;
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentEditor;
+            let selectedImageUrl;
+            let selectedAlign = 'none';
+            let selectedSize = '300x300';
 
-        /* Görsel önizleme */
-        document.querySelector('input[name="FeaturedImageFile"]').addEventListener('change', e => {
-            const file = e.target.files[0];
-            const img = document.getElementById('featuredPreview');
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = ev => { img.src = ev.target.result; img.style.display = 'block'; };
-                reader.readAsDataURL(file);
-            } else { img.style.display = 'none'; }
-        });
+            // TinyMCE init
+            tinymce.init({
+                selector: '#contentEditor',
+                plugins: 'link lists image imagetools',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist | image | link',
+                imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
+                object_resizing: 'img',
+                image_advtab: true,
+                image_caption: true,
+                height: 400,
+                setup: editor => { currentEditor = editor; }
+            });
 
-        /* TinyMCE */
-        tinymce.init({
-            selector: '#contentEditor',
-            plugins: 'link image lists',
-            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright | bullist numlist | link image',
-            height: 400,
-            menubar: false
+            // open gallery
+            window.openGallery = function () {
+                loadImages();
+                new bootstrap.Modal(document.getElementById('imageManagerModal')).show();
+            };
+
+            // load images
+            function loadImages() {
+                fetch('@Url.Action("GetImages", "File")')
+                    .then(res => res.json())
+                    .then(data => {
+                        const list = document.getElementById('imagesList'); list.innerHTML = '';
+                        data.forEach(img => {
+                            const elt = document.createElement('img');
+                            elt.src = img.url; elt.alt = img.title;
+                            elt.className = 'img-thumbnail'; elt.style.cssText = 'width:100px;margin:5px;cursor:pointer';
+                            elt.onclick = () => showDetails(img.url, img.title);
+                            list.appendChild(elt);
+                        });
+                    });
+            }
+
+            // show image details
+            function showDetails(url, title) {
+                selectedImageUrl = url;
+                document.getElementById('detailImage').src = url;
+                document.getElementById('detailImage').style.display = 'block';
+                document.getElementById('detailTitle').textContent = title;
+                document.getElementById('addToTextBtn').disabled = false;
+                document.getElementById('deleteImageBtn').style.display = 'block';
+            }
+
+            // alignment buttons
+            document.querySelectorAll('[data-align]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedAlign = btn.getAttribute('data-align');
+                    // highlight selected
+                    document.querySelectorAll('[data-align]').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            // size selector
+            const sizeSelect = document.getElementById('imageSizeSelect');
+            const customInputs = document.getElementById('customSizeInputs');
+            sizeSelect.addEventListener('change', () => {
+                selectedSize = sizeSelect.value;
+                if (selectedSize === 'custom') customInputs.style.display = 'flex';
+                else customInputs.style.display = 'none';
+            });
+
+            // add to text
+            document.getElementById('addToTextBtn').addEventListener('click', () => {
+                if (!selectedImageUrl) return;
+                let [w, h] = selectedSize.split('x');
+                if (selectedSize === 'full') { w = null; h = null; }
+                if (selectedSize === 'custom') {
+                    w = document.getElementById('customWidth').value;
+                    h = document.getElementById('customHeight').value;
+                }
+                // build img tag
+                let style = '';
+                if (selectedAlign !== 'none') style += `float:${selectedAlign}; margin:0 10px 10px 0;`;
+                let attr = `src="${selectedImageUrl}" alt=""`;
+                if (w) attr += ` width="${w}"`;
+                if (h) attr += ` height="${h}"`;
+                if (style) attr += ` style="${style}"`;
+                currentEditor.insertContent(`<img ${attr} />`);
+                bootstrap.Modal.getInstance(document.getElementById('imageManagerModal')).hide();
+            });
+
+            // delete image
+            document.getElementById('deleteImageBtn').addEventListener('click', () => {
+                if (!selectedImageUrl) return;
+                const filename = selectedImageUrl.split('/').pop();
+                fetch(`@Url.Action("DeleteImage", "File")?filename=${filename}`, { method: 'DELETE' })
+                    .then(() => loadImages());
+            });
+
+            // upload
+            document.getElementById('uploadInput').addEventListener('change', function () {
+                const file = this.files[0]; if (!file) return;
+                const fd = new FormData(); fd.append('file', file);
+                fetch('@Url.Action("UploadImage", "File")', { method: 'POST', body: fd })
+                    .then(res => res.json())
+                    .then(() => loadImages());
+            });
         });
     </script>
 }

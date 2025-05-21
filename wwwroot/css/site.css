@@ -100,6 +100,13 @@ h6 { font-size: 1rem; }
   padding-bottom: 0.75rem;
 }
 
+/* Hover rengini seçili hale de uygula */
+.storinta-main-navbar .nav-link.active,
+.storinta-main-navbar .nav-link:hover {
+  color: var(--storinta-color-accent) !important;
+}
+
+
 /* Logo ("Storinta" Yazısı) */
 .storinta-main-navbar .navbar-brand.storinta-navbar-brand-text {
   font-family: var(--storinta-font-heading) !important;

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3LZvpZYRAFW9ZCmerDrr+sT0oyBtra5SZ5CBeCcYEWo=",
+  "Hash": "FV48/St1ym2R9m4y3cd1GNUOTDDGX0HVXO1Wob/R850=",
   "Source": "HumanBodyWeb",
   "BasePath": "_content/HumanBodyWeb",
   "Mode": "Default",
@@ -2373,6 +2373,25 @@
       "OriginalItemSpec": "wwwroot/lib/jquery/LICENSE.txt"
     },
     {
+      "Identity": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/02f0193ed9f346d3907fd92fbb5af21e.jpg",
+      "SourceId": "HumanBodyWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/",
+      "BasePath": "_content/HumanBodyWeb",
+      "RelativePath": "uploads/02f0193ed9f346d3907fd92fbb5af21e.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/uploads/02f0193ed9f346d3907fd92fbb5af21e.jpg"
+    },
+    {
       "Identity": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/57b928b2-614a-48b2-a305-24dabbea169f.png",
       "SourceId": "HumanBodyWeb",
       "SourceType": "Discovered",
@@ -2447,6 +2466,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/uploads/b9c2f2e7-c6ba-4b81-b68f-2475199ca4fd.png"
+    },
+    {
+      "Identity": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/ede7257945d845a1b117153afc445806.jpg",
+      "SourceId": "HumanBodyWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/",
+      "BasePath": "_content/HumanBodyWeb",
+      "RelativePath": "uploads/ede7257945d845a1b117153afc445806.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/uploads/ede7257945d845a1b117153afc445806.jpg"
     },
     {
       "Identity": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/featured/22b4ca8f-7eaf-40a4-b7e1-5d0187788b9f.png",

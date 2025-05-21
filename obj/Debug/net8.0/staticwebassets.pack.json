@@ -257,6 +257,10 @@
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
     },
     {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/02f0193ed9f346d3907fd92fbb5af21e.jpg",
+      "PackagePath": "staticwebassets/uploads/02f0193ed9f346d3907fd92fbb5af21e.jpg"
+    },
+    {
       "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/57b928b2-614a-48b2-a305-24dabbea169f.png",
       "PackagePath": "staticwebassets/uploads/57b928b2-614a-48b2-a305-24dabbea169f.png"
     },
@@ -271,6 +275,10 @@
     {
       "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/b9c2f2e7-c6ba-4b81-b68f-2475199ca4fd.png",
       "PackagePath": "staticwebassets/uploads/b9c2f2e7-c6ba-4b81-b68f-2475199ca4fd.png"
+    },
+    {
+      "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/ede7257945d845a1b117153afc445806.jpg",
+      "PackagePath": "staticwebassets/uploads/ede7257945d845a1b117153afc445806.jpg"
     },
     {
       "Id": "/Users/denizkaanvurgun/HumanBodyWeb/wwwroot/uploads/featured/22b4ca8f-7eaf-40a4-b7e1-5d0187788b9f.png",

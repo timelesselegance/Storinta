@@ -1,4 +1,8 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,66 +18,91 @@
     <!-- Bootstrap & site CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" />
+
+    <!-- Image Manager eklentisi CSS -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/summernote/summernote-image-manager@master/dist/css/summernote-image-manager.css" />
 </head>
 
 <body>
     <header>
-    <nav class="navbar navbar-expand-lg storinta-main-navbar fixed-top">
-        <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg storinta-main-navbar fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand storinta-navbar-brand-text" asp-controller="Home" asp-action="Index">
+                    Storinta
+                </a>
 
-            <a class="navbar-brand storinta-navbar-brand-text" asp-controller="Home" asp-action="Index">
-                Storinta
-            </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarStorintaContent" aria-controls="navbarStorintaContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarStorintaContent" aria-controls="navbarStorintaContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarStorintaContent">
-             
-                <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
-                    </li>
-                       <li class="nav-item">
-        <a class="nav-link" asp-controller="Blog" asp-action="SavedPosts">Kaydedilen Yazılar</a>
-    </li>
-    <li class="nav-item">
-  <a class="nav-link" asp-controller="Blog" asp-action="MyPosts">Bloglarım</a>
-</li>
-
-                    @if (User.IsInRole("Admin"))
-                    {
+                <div class="collapse navbar-collapse" id="navbarStorintaContent">
+                    <ul class="navbar-nav mx-lg-auto mb-2 mb-lg-0">
+                        @if (!(currentController == "Home" && currentAction == "Index"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                    Home
+                                </a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index" class="nav-link">
-                                User&nbsp;Management
+                            <a class="nav-link @(currentController == "Blog" && currentAction == "Index" ? "active" : "")"
+                                asp-controller="Blog" asp-action="Index">
+                                Blog
                             </a>
                         </li>
-                    }
-                    @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
-                    {
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Blog" asp-action="Create">Yeni Yazı</a>
+                            <a class="nav-link @(currentController == "Blog" && currentAction == "SavedPosts" ? "active" : "")"
+                                asp-controller="Blog" asp-action="SavedPosts">
+                                Kaydedilen Yazılar
+                            </a>
                         </li>
-                    }
-                 
-                </ul>
+                        <li class="nav-item">
+                            <a class="nav-link @(currentController == "Blog" && currentAction == "MyPosts" ? "active" : "")"
+                                asp-controller="Blog" asp-action="MyPosts">
+                                Bloglarım
+                            </a>
+                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "UserManagement" && ViewContext.RouteData.Values["area"]?.ToString() == "Admin" ? "active" : "")"
+                                    asp-area="Admin" asp-controller="UserManagement" asp-action="Index">
+                                    User&nbsp;Management
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(currentController == "Blog" && currentAction == "Create" ? "active" : "")"
+                                    asp-controller="Blog" asp-action="Create">
+                                    Yeni Yazı
+                                </a>
+                            </li>
+                        }
+                    </ul>
 
-               
-                <div class="navbar-nav ms-lg-auto">
-                    <div class="d-lg-flex align-items-center gap-lg-2 login-color mt-3 mt-lg-0">
-                        @await Html.PartialAsync("_LoginPartial")
+                    <div class="navbar-nav ms-lg-auto">
+                        <div class="d-lg-flex align-items-center gap-lg-2 login-color mt-3 mt-lg-0">
+                            @await Html.PartialAsync("_LoginPartial")
+                        </div>
                     </div>
                 </div>
             </div>
-        </div> 
-    </nav>
-</header>
+        </nav>
+    </header>
 
-    <main role="main" class="pb-3"> @RenderBody()</main>
+    <main role="main" class="pb-3">
+        <div class="container py-3">
+            @RenderBody()
+        </div>
+    </main>
 
     <footer class="footer mt-auto py-3 bg-light">
         <div class="container text-center">
@@ -83,18 +112,18 @@
 
     <!-- Bootstrap scripts -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
+    <!-- Image Manager eklentisi JS -->
+    <script
+        src="https://cdn.jsdelivr.net/gh/summernote/summernote-image-manager@master/dist/js/summernote-image-manager.min.js"></script>
     @RenderSection("Scripts", required: false)
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const navbar = document.querySelector('.storinta-main-navbar');
-            if (navbar) { // Navbar elementinin var olduğundan emin olalım
-                // Navbar'ın body'e yaptığı padding-top ayarını dinamik yapmak isterseniz:
-                // const navbarHeight = navbar.offsetHeight;
-                // document.body.style.paddingTop = navbarHeight + 'px';
-                // Ancak CSS'te sabit bir padding-top (örn: 70px) vermek genellikle daha stabildir.
-
+            if (navbar) {
                 window.addEventListener('scroll', function () {
-                    if (window.scrollY > 30) { // 30px kaydırıldıktan sonra (bu değeri değiştirebilirsiniz)
+                    if (window.scrollY > 30) {
                         navbar.classList.add('navbar-scrolled');
                     } else {
                         navbar.classList.remove('navbar-scrolled');
